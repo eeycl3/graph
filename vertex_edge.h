@@ -55,5 +55,37 @@ private:
         edge_event_type type;
 
 public:
+        edge(vertex _v1 , vertex _v2, direction _dir = bi_directional, int _speed = 50, double _length = 0, edge_event_type _type = open ):
+        v1(_v1),v2(_v2),dir(_dir),speed(_speed),length(_length),type(_type)
+        {
+
+        //length = sqrt(pow((v1.x - v2.x),2)+pow((v1.y - v2.y),2))
+
+        }
+
+        ~edge(){}
+
+        edge(const edge& p)  // copy constructor
+        {
+            *this = p;
+        }
+
+        edge & operator = (const edge& p)    //operator =
+        {
+            if(this == &p) return(*this);
+            v1 = p.v1;
+            v2 = p.v2;
+            dir = p.dir;
+            speed = p.speed;
+            length = p.length;
+            type = p.type;
+            return (*this);
+        }
+
+        set_event_type (const edge_event_type _type)
+        {
+           type = _type;
+        }
+
 
 };
