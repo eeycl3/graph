@@ -28,7 +28,7 @@
 *.out
 *.app
 
-# VS 
+# VC
 .gitattributes
 *.VC.*
 *.aps
@@ -37,4 +37,6 @@
 *.vcxproj
 *.vcxproj.filters
 .vs/
+main/
+#main.cpp
 
