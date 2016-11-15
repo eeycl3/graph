@@ -2,11 +2,21 @@
 #include <string>
 #include <vector>
 
+#define DEFAULT_VERTEX_NAME "unnamed"
+#define DEFAULT_VERTEX_TYPE POINT_OF_INTEREST
+#define DEFAULT_X 0
+#define DEFAULT_Y 0
+
+#define DEFAULT_DIRECTION BI_DIRECTIONAL
+#define DEFAULT_LENGTH 20
+#define DEFAULT_SPEED 30
+#define DEFAULT_EDGE_TYPE OPEN
+
 using namespace std;
 
-enum vertexType { POINT_OF_INTEREST = 0, INTERSECTION = 1 };
-enum dirType { BI_DIRECTIONAL = 0, V1_TO_V2 = 1, V2_TO_V1 = 2 };
-enum eventType { OPEN = 0, CLOSE = 1 };
+enum vertexType { POINT_OF_INTEREST = 0, INTERSECTION = 1 };    //vertex type
+enum dirType { BI_DIRECTIONAL = 0, V1_TO_V2 = 1, V2_TO_V1 = 2 }; //direction
+enum eventType { OPEN = 0, CLOSE = 1, HAZARD = 2 };  //edge event type
 
 class Vertex
 {
@@ -20,15 +30,11 @@ private:
 
 	int y;
 
-	int priority;
-
-	string prev;
-
 public:
 
-	Vertex(string _name = "unnamed", vertexType _type = POINT_OF_INTEREST, int _x = 0, int _y = 0, int _priority = INT_MAX, string _prev = "") :name(_name), type(_type), x(_x), y(_y), priority(_priority), prev(_prev) {}
+	Vertex(string _name = DEFAULT_VERTEX_NAME, vertexType _type = DEFAULT_VERTEX_TYPE, int _x = DEFAULT_X, int _y = DEFAULT_Y) :name(_name), type(_type), x(_x), y(_y) {} //constructor
 
-	~Vertex() {}
+	~Vertex() {}    //destructor
 
 	Vertex(const Vertex& p)  // copy constructor
 	{
@@ -42,14 +48,9 @@ public:
 		type = p.type;
 		x = p.x;
 		y = p.y;
-		priority = p.priority;
-		prev = p.prev;
 		return (*this);
 	}
 
-	bool operator < (Vertex& v2) {     // operator <
-		return this->priority < v2.priority;
-	}
 
 	string getName()
 	{
@@ -69,28 +70,12 @@ public:
 		return y;
 	}
 
-	int getPriority() {
-		return priority;
-	}
-
-	string getPrev() {
-		return prev;
-	}
-
-	void setPriority(int _priority) {
-		priority = _priority;
-	}
-
 	void setType(vertexType _type) {
 		type = _type;
 	}
 
-	void setPrev(string _prev) {
-		prev = _prev;
-	}
-
 	void print() {
-		cout << "vertex: name = " << name << ", type = " << type << ", x = " << x << ", y = " << y << ", priority = " << priority << endl;
+		cout << "vertex: name = " << name << ", type = " << type << ", x = " << x << ", y = " << y << endl;
 	}
 
 
@@ -112,10 +97,10 @@ private:
 	eventType type;
 
 public:
-	Edge(string _v1, string _v2, dirType _dir = BI_DIRECTIONAL, int _speed = 30, int _length = 10, eventType _type = OPEN) :
-		v1(_v1), v2(_v2), dir(_dir), speed(_speed), length(_length), type(_type) {}
+	Edge(string _v1, string _v2, dirType _dir = DEFAULT_DIRECTION, int _speed = DEFAULT_SPEED, int _length = DEFAULT_LENGTH, eventType _type = DEFAULT_EDGE_TYPE) :
+		v1(_v1), v2(_v2), dir(_dir), speed(_speed), length(_length), type(_type) {} //constructor
 
-	~Edge() {}
+	~Edge() {}  //destructor
 
 	Edge(const Edge& p)  // copy constructor
 	{
