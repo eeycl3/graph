@@ -6,33 +6,26 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-
+	
 	Graph m1;
-	m1.retrieve("test3.txt");
+	m1.retrieve("./test cases/test1.txt");
+	m1.vertex("ccjil");
+	m1.edgeEvent("E1",CLOSE);
+	m1.trip("CLV", "CLN", "path1", SHORTEST);
+	m1.edgeEvent("E1",OPEN);
+	m1.trip("CLV", "CLN", "path1", FASTEST);
+	m1.addVertex("RCH",POINT_OF_INTEREST,4,5);
+	m1.addEdge("additional","RCH","CLV",V1_TO_V2,50,2,OPEN);
+	m1.vertex("CLN");
+	m1.store("output1.txt");
 
-	//m1.trip("50/BearingerRd1231232", "AlbertSt/8", "shortest_path");
-	//Vertex* a = m1.getVertex("C1");
-	//a->print();
-	//a = m1.getVertex("DC");
-	//a->print();
-	//a = m1.getVertex("C2");
-	//a->print();
-	//a = m1.getVertex("C3");
-	//a->print();
-	//a = m1.getVertex("58Cardill");
-	//a->print();
-	//Vertex* b = m1.getVertex("C2");
-	//b->setPriority(150);
-	//b->print();
-	//int num = Graph::getNumRoad();
-	//cout << num << endl;
-	//vector<string>* r1 = m1.getRoad("goHome");
-	//strPrint(*r1);
-	//r1->push_back("hello");
-	//vector<string>* r2 = m1.getRoad("goHome");
-	//strPrint(*r2);
-	//strPrint(*r1);
-	m1.store("output.txt");
+	Graph m2;
+	m2.retrieve("./test cases/test1.txt");
+	m2.trip("CLV", "340", "path1", SHORTEST);
+	m2.trip("CLV", "340", "path1", FASTEST);
+	vector<string> *a = new vector<string> ;
+	m2.road("test_road",*a);
+	m2.store("output2.txt");
 
 	return 0;
 }

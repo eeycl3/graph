@@ -68,17 +68,6 @@ private:
 		return result;
 	}
 
-	//void strPrint(vector<string> strList) {
-	//	if (strList.size() == 0) {
-	//		return;
-	//	}
-	//	cout << "(";
-	//	for (int i = 0; i < strList.size() - 1; i++) {
-	//		cout << strList[i] << ",";
-	//	}
-	//	cout << strList[strList.size() - 1] << ")" << endl;
-	//}
-
 	void retrieveVertex(string str) {
 		//cout << str << endl;
 		vector<string> strSplit = split(str, " ");
@@ -95,7 +84,6 @@ private:
 			cout << "vertexType does not match in \"" << str << "\"!" << endl;
 		}
 
-		//cout << "name = " << name << "; type = " << type << "; x = " << x << "; y = " << y << endl;
 		addVertex(name, type, x, y);
 	}
 
@@ -126,7 +114,6 @@ private:
 			cout << "eventType does not match in \"" << str << "\"!" << endl;
 		}
 
-		//cout << "name = " << name << "; v1 = " << v1 << "; v2 = " << v2 << "; dir = " << dir << "; speed = " << speed << "; length = " << length << "; type = " << type << endl;
 		addEdge(name, v1, v2, dir, speed, length, type);
 	}
 
@@ -139,15 +126,6 @@ private:
 		for (int i = 1; i < len; i++) {
 			edges.push_back(strSplit[i]);
 		}
-
-		//cout << "name = " << name;
-		//int num = edges.size();
-		//for (int i = 0; i < num; i++) {
-		//	cout << "; edge" << i << " = " << edges[i];
-		//}
-
-		//cout << endl;
-
 		road(name, edges);
 	}
 
@@ -169,7 +147,7 @@ public:
 		}
 		else {
 			cout << "The graph does not contain the vertex \"" << name << "\"!" << endl;
-			exit(1);
+			return NULL;
 		}
 	}
 
@@ -179,7 +157,7 @@ public:
 		}
 		else {
 			cout << "The graph does not contain the edge \"" << name << "\"!" << endl;
-			exit(1);
+			return NULL;
 		}
 	}
 
@@ -208,7 +186,8 @@ public:
 		}
 		return vertices;
 	}
-  vector<string>* getRoad(string name) { ////check the road whether is in map or not
+
+	vector<string>* getRoad(string name) { ////check the road whether is in map or not
 		if (containsRoad(name)) {
 			return &roadMap.at(name);
 		}
@@ -220,6 +199,10 @@ public:
 
 	string getV2(string v1, string edge) {//get the other vertex of the edge
 		Edge* p = getEdge(edge);
+		if (p == NULL) {
+			cout << "the graph does not contain the edge \"" << edge << "\"!" << endl;
+			exit(1);
+		}
 		if (p->getV1() == v1) {
 			return p->getV2();
 		}
@@ -251,16 +234,28 @@ public:
 
 	int getEdgeLength(string label) {
 		Edge* p = getEdge(label);
+		if (p == NULL) {
+			cout << "the graph does not contain the edge \"" << label << "\"!" << endl;
+			exit(1);
+		}
 		return p->getLength();
 	}
 
 	int getEdgeSpeed(string label) {
 		Edge* p = getEdge(label);
+		if (p == NULL) {
+			cout << "the graph does not contain the edge \"" << label << "\"!" << endl;
+			exit(1);
+		}
 		return p->getSpeed();
 	}
 
 	eventType getEdgeEvent(string label) {
 		Edge* p = getEdge(label);
+		if (p == NULL) {
+			cout << "the graph does not contain the edge \"" << label << "\"!" << endl;
+			exit(1);
+		}
 		return p->getType();
 	}
 
@@ -279,7 +274,7 @@ public:
 	{
 		if (!containsVertex(v1) || !containsVertex(v2)) {
 			cout << "error: edge vertex does not exist!" << endl;
-			exit(1);
+			return;
 		}
 
 		Edge newEdge(v1, v2, dir, speed, length, type);
@@ -313,6 +308,10 @@ public:
 	void edgeEvent(string label, eventType type)
 	{
 		Edge* e = getEdge(label);
+		if (e == NULL) {
+			cout << "the graph does not contain the edge \"" << label << "\"!" << endl;
+			exit(1);
+		}
 		e->setEventType(type);
 	}
 
